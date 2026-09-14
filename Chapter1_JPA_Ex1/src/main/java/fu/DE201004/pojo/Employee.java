@@ -1,4 +1,4 @@
-package fe.DE201004.pojo;
+package fu.DE201004.pojo;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
