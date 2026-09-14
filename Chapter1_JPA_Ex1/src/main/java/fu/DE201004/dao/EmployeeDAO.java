@@ -1,9 +1,11 @@
 package fu.DE201004.dao;
 
 import fu.DE201004.pojo.Employee;
+import fu.DE201004.pojo.Gender;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public class EmployeeDAO {
@@ -97,5 +99,8 @@ public class EmployeeDAO {
         } finally {
             em.close();
         }
+        
     }
+
 }
+
