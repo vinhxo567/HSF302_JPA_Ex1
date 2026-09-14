@@ -24,3 +24,21 @@ public class EmployeeDAO {
             em.close(); // sau dong nay, e (neu con giu tham chieu) la DETACHED
         }
     }
+    public Employee findById(Long id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.find(Employee.class, id); // tra ve null neu khong ton tai
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Employee> findAll() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT e FROM Employee e", Employee.class)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
