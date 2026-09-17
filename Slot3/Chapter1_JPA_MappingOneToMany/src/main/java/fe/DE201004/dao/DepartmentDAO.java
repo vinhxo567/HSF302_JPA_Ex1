@@ -54,6 +54,16 @@ public class DepartmentDAO {
         }
     }
 
+    // TODO 2.9: Bản findAllWithEmployees() giải quyết N+1 problem
+    public List<Department> findAllWithEmployees() {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT d FROM Department d JOIN FETCH d.employees", Department.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
     public Department update(Department department) {
         EntityManager em = JPAUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();

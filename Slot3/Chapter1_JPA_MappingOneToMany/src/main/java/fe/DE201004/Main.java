@@ -15,11 +15,11 @@ public class Main {
         DepartmentDAO departmentDAO = new DepartmentDAO();
 
 
-        System.out.println("--- BẮT ĐẦU TODO 2.8: TÁI HIỆN N+1 QUERY PROBLEM ---");
+        System.out.println("--- BẮT ĐẦU TODO 2.9: FIX N+1 PROBLEM BẰNG JOIN FETCH ---");
   
-        List<Department> departments = departmentDAO.findAll();
+        List<Department> departments = departmentDAO.findAllWithEmployees();
         
-        System.out.println("Đã lấy xong danh sách Departments (1 câu lệnh SELECT).");
+        System.out.println("Đã lấy xong danh sách Departments (1 câu lệnh SELECT DUY NHẤT).");
         System.out.println("Bắt đầu lặp qua danh sách để lấy thông tin Employees (Sẽ sinh ra N câu SELECT):");
 
         for (Department dept : departments) {
@@ -29,7 +29,7 @@ public class Main {
                 System.out.println(" - " + e.getFullName());
             }
         }
-        System.out.println("--- KẾT THÚC TODO 2.8 ---");
+        System.out.println("--- KẾT THÚC TODO 2.9 ---");
 
         JPAUtil.close();
     }
