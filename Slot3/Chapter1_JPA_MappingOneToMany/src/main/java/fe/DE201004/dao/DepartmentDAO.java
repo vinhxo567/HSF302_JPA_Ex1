@@ -33,6 +33,18 @@ public class DepartmentDAO {
         }
     }
 
+
+    public Department findByIdWithEmployees(Long id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT d FROM Department d JOIN FETCH d.employees WHERE d.id = :id", Department.class)
+                     .setParameter("id", id)
+                     .getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+
     public List<Department> findAll() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
@@ -48,7 +60,7 @@ public class DepartmentDAO {
         Department merged = null;
         try {
             tx.begin();
-            // TODO 2.5: update() dùng em.merge() và gán lại kết quả
+
             merged = em.merge(department);
             tx.commit();
         } catch (Exception ex) {
