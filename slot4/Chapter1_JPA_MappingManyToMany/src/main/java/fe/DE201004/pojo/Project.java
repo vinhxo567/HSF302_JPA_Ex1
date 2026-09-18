@@ -24,8 +24,8 @@ public class Project {
     private LocalDate startDate;
 
     private LocalDate endDate;
-
     // Quan hệ N-N (Annotation sẽ được thiết lập ở TODO 5.3)
+    @ManyToMany(mappedBy = "projects")
     private Set<Employee> employees = new HashSet<>();
 
     // Constructor không tham số (Bắt buộc phải có trong JPA)
