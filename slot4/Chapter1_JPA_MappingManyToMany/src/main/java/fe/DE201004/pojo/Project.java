@@ -97,4 +97,15 @@ public class Project {
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Project)) return false;
+        Project project = (Project) o;
+        return projectCode != null && projectCode.equals(project.getProjectCode());
+    }
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

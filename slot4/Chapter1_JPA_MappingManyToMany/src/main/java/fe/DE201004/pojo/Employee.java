@@ -122,4 +122,16 @@ public class Employee {
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return email != null && email.equals(employee.getEmail());
+    }
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
 }
