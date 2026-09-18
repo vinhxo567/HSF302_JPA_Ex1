@@ -50,6 +50,13 @@ public class Employee {
         this.hireDate = hireDate;
         this.active = true;
     }
+    // TODO 5.5: Helper method để đồng bộ hóa cả 2 phía của quan hệ N-N
+    public void assignToProject(Project p) {
+        if (p != null) {
+            this.projects.add(p);
+            p.getEmployees().add(this);
+        }
+    }
 
     public Long getId() {
         return id;
