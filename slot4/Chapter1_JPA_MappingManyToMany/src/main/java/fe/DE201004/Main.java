@@ -100,6 +100,21 @@ public class Main {
         }
         System.out.println("--- KẾT THÚC TODO 5.10 ---\n");
 
+        System.out.println("--- BẮT ĐẦU TODO 5.11: DEACTIVATE EMPLOYEE ---");
+        System.out.println("Set trạng thái nghỉ việc (active=false) cho NV1...");
+        employeeDAO.deactivateEmployee(e1.getId());
+        
+        Employee dbE1AfterDeactivate = employeeDAO.findByIdWithProjects(e1.getId());
+        System.out.println("Trạng thái active của NV1 hiện tại: " + dbE1AfterDeactivate.isActive());
+        System.out.println("Số project NV1 vẫn đang có tên (để giữ lịch sử): " + dbE1AfterDeactivate.getProjects().size());
+        
+        System.out.println("\nThống kê lại project (chỉ đếm active = true) sau khi NV1 nghỉ việc:");
+        List<Object[]> statsAfter = projectDAO.getProjectStatistics();
+        for (Object[] row : statsAfter) {
+            System.out.println("Dự án: " + row[0] + " | Số NV active: " + row[1] + " | Tổng lương: " + row[2]);
+        }
+        System.out.println("--- KẾT THÚC TODO 5.11 ---\n");
+
         JPAUtil.close();
     }
 

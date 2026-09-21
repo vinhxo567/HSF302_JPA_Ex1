@@ -144,4 +144,34 @@ public class EmployeeDAO {
             em.close();
         }
     }
+
+    // TODO 5.11: Deactivate nhân viên thay vì xóa hẳn
+    /*
+     * Giải thích: Khi nhân viên nghỉ việc (deactivate), ta KHÔNG NÊN tự động gỡ họ khỏi tất cả các project
+     * bằng CascadeType.REMOVE hay gỡ quan hệ trong bảng trung gian.
+     * Lý do:
+     * - Cần giữ nguyên dữ liệu trong bảng trung gian employee_project để phục vụ mục đích tra cứu lịch sử 
+     *   (biết ai đã từng tham gia dự án nào).
+     * - Không dùng CascadeType.REMOVE ở quan hệ ManyToMany vì nếu thiết lập không cẩn thận, việc xóa Employee 
+     *   sẽ kéo theo việc xóa luôn các Project đang liên kết, gây ảnh hưởng đến dữ liệu dự án và các Employee khác.
+     * Cách xử lý phù hợp: Chỉ update cột active = false (soft delete) và giữ nguyên liên kết N-N. 
+     * Các query nghiệp vụ (như báo cáo ở TODO 5.8, 5.10) sẽ thêm điều kiện WHERE active = true để lọc dữ liệu hợp lệ.
+     */
+    public void deactivateEmployee(Long employeeId) {
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            Employee employee = em.find(Employee.class, employeeId);
+            if (employee != null) {
+                employee.setActive(false);
+            }
+            tx.commit();
+        } catch (Exception ex) {
+            if (tx.isActive()) tx.rollback();
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
 }
