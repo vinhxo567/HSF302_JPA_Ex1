@@ -89,6 +89,17 @@ public class Main {
         printEmployeeProjects(employeeDAO, e1.getId());
         System.out.println("--- KẾT THÚC TODO 5.9 ---\n");
 
+        System.out.println("--- BẮT ĐẦU TODO 5.10: TÌM NHÂN VIÊN THAM GIA > 1 PROJECT ---");
+        System.out.println("Phân công thêm NV2 vào Project A để test...");
+        employeeDAO.assignEmployeeToProject(e2.getId(), pA.getId());
+        
+        List<Employee> busyEmployees = employeeDAO.findEmployeesInMultipleProjects();
+        System.out.println("Có " + busyEmployees.size() + " nhân viên tham gia > 1 dự án:");
+        for (Employee e : busyEmployees) {
+            System.out.println("- " + e.getFullName() + " (Email: " + e.getEmail() + ")");
+        }
+        System.out.println("--- KẾT THÚC TODO 5.10 ---\n");
+
         JPAUtil.close();
     }
 
