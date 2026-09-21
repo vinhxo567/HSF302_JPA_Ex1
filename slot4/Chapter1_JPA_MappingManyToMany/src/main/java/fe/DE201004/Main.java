@@ -79,7 +79,15 @@ public class Main {
             BigDecimal totalSalary = (BigDecimal) row[2];
             System.out.println("Dự án: " + projectName + " | Số NV active: " + employeeCount + " | Tổng lương: " + totalSalary);
         }
-        System.out.println("--- KẾT THÚC TODO 5.8 ---");
+        System.out.println("--- KẾT THÚC TODO 5.8 ---\n");
+
+        System.out.println("--- BẮT ĐẦU TODO 5.9: GỠ NHÂN VIÊN KHỎI DỰ ÁN ---");
+        System.out.println("Thực hiện gỡ NV1 khỏi Project A...");
+        employeeDAO.unassignEmployeeFromProject(e1.getId(), pA.getId());
+        
+        System.out.println("Danh sách dự án của NV1 sau khi gỡ:");
+        printEmployeeProjects(employeeDAO, e1.getId());
+        System.out.println("--- KẾT THÚC TODO 5.9 ---\n");
 
         JPAUtil.close();
     }

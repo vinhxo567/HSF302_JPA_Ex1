@@ -58,6 +58,14 @@ public class Employee {
         }
     }
 
+    // TODO 5.9: Method gỡ khỏi dự án (xóa khỏi cả 2 phía)
+    public void unassignFromProject(Project p) {
+        if (p != null) {
+            this.projects.remove(p);
+            p.getEmployees().remove(this);
+        }
+    }
+
     public Long getId() {
         return id;
     }
