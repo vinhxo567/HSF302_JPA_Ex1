@@ -11,6 +11,7 @@ import fe.DE201004.util.JPAUtil;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -68,7 +69,17 @@ public class Main {
         printEmployeeProjects(employeeDAO, e2.getId());
         printEmployeeProjects(employeeDAO, e3.getId());
 
-        System.out.println("--- KẾT THÚC TODO 5.7 ---");
+        System.out.println("--- KẾT THÚC TODO 5.7 ---\n");
+
+        System.out.println("--- BẮT ĐẦU TODO 5.8: THỐNG KÊ PROJECT ---");
+        List<Object[]> stats = projectDAO.getProjectStatistics();
+        for (Object[] row : stats) {
+            String projectName = (String) row[0];
+            Long employeeCount = (Long) row[1];
+            BigDecimal totalSalary = (BigDecimal) row[2];
+            System.out.println("Dự án: " + projectName + " | Số NV active: " + employeeCount + " | Tổng lương: " + totalSalary);
+        }
+        System.out.println("--- KẾT THÚC TODO 5.8 ---");
 
         JPAUtil.close();
     }
