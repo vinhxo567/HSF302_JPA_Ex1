@@ -1,36 +1,83 @@
 package fe.DE201004;
 
 import fe.DE201004.dao.DepartmentDAO;
+import fe.DE201004.dao.EmployeeDAO;
+import fe.DE201004.dao.ProjectDAO;
 import fe.DE201004.pojo.Department;
 import fe.DE201004.pojo.Employee;
 import fe.DE201004.pojo.Gender;
+import fe.DE201004.pojo.Project;
 import fe.DE201004.util.JPAUtil;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
         DepartmentDAO departmentDAO = new DepartmentDAO();
+        EmployeeDAO employeeDAO = new EmployeeDAO();
+        ProjectDAO projectDAO = new ProjectDAO();
 
+        System.out.println("--- BẮT ĐẦU TODO 5.7: DEMO MANY-TO-MANY ---");
 
-        System.out.println("--- BẮT ĐẦU TODO 2.9: FIX N+1 PROBLEM BẰNG JOIN FETCH ---");
-  
-        List<Department> departments = departmentDAO.findAllWithEmployees();
+        // 1. Tạo Department (bắt buộc vì Employee yêu cầu department_id không null)
+        Department dept = new Department();
+        dept.setName("IT Department");
+        departmentDAO.save(dept);
+        System.out.println("Đã tạo phòng ban: " + dept.getName());
+
+        // 2. Tạo 3 Employee
+        Employee e1 = new Employee("nv1@gmail.com", "Nguyen Van A", Gender.MALE, new BigDecimal("1000"), LocalDate.now());
+        e1.setDepartment(dept);
+        Employee e2 = new Employee("nv2@gmail.com", "Tran Thi B", Gender.FEMALE, new BigDecimal("1200"), LocalDate.now());
+        e2.setDepartment(dept);
+        Employee e3 = new Employee("nv3@gmail.com", "Le Van C", Gender.MALE, new BigDecimal("1100"), LocalDate.now());
+        e3.setDepartment(dept);
+
+        employeeDAO.save(e1);
+        employeeDAO.save(e2);
+        employeeDAO.save(e3);
+        System.out.println("Đã tạo 3 nhân viên: NV1, NV2, NV3");
+
+        // 3. Tạo 2 Project
+        Project pA = new Project("PROJ-A", "Project A", new BigDecimal("50000"), LocalDate.now(), null);
+        Project pB = new Project("PROJ-B", "Project B", new BigDecimal("80000"), LocalDate.now(), null);
+
+        projectDAO.save(pA);
+        projectDAO.save(pB);
+        System.out.println("Đã tạo 2 dự án: Project A, Project B");
+
+        // 4. Phân công chéo
+        // NV1 tham gia Project A+B
+        employeeDAO.assignEmployeeToProject(e1.getId(), pA.getId());
+        employeeDAO.assignEmployeeToProject(e1.getId(), pB.getId());
+
+        // NV2 tham gia Project B
+        employeeDAO.assignEmployeeToProject(e2.getId(), pB.getId());
+
+        // NV3 tham gia Project A
+        employeeDAO.assignEmployeeToProject(e3.getId(), pA.getId());
         
-        System.out.println("Đã lấy xong danh sách Departments (1 câu lệnh SELECT DUY NHẤT).");
-        System.out.println("Bắt đầu lặp qua danh sách để lấy thông tin Employees (Sẽ sinh ra N câu SELECT):");
+        System.out.println("Đã phân công nhân viên vào dự án xong.\n");
 
-        for (Department dept : departments) {
-            System.out.println("Phòng ban: " + dept.getName());
-   
-            for (Employee e : dept.getEmployees()) {
-                System.out.println(" - " + e.getFullName());
-            }
-        }
-        System.out.println("--- KẾT THÚC TODO 2.9 ---");
+        // 5. In ra danh sách project của từng nhân viên
+        System.out.println("--- DANH SÁCH PROJECT CỦA TỪNG NHÂN VIÊN ---");
+        
+        printEmployeeProjects(employeeDAO, e1.getId());
+        printEmployeeProjects(employeeDAO, e2.getId());
+        printEmployeeProjects(employeeDAO, e3.getId());
+
+        System.out.println("--- KẾT THÚC TODO 5.7 ---");
 
         JPAUtil.close();
+    }
+
+    private static void printEmployeeProjects(EmployeeDAO employeeDAO, Long empId) {
+        Employee emp = employeeDAO.findByIdWithProjects(empId);
+        String projectNames = emp.getProjects().stream()
+                .map(Project::getProjectName)
+                .collect(Collectors.joining(", "));
+        System.out.println("- " + emp.getFullName() + " tham gia " + emp.getProjects().size() + " dự án: [" + projectNames + "]");
     }
 }

@@ -34,6 +34,17 @@ public class EmployeeDAO {
         }
     }
 
+    public Employee findByIdWithProjects(Long id) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return em.createQuery("SELECT e FROM Employee e LEFT JOIN FETCH e.projects WHERE e.id = :id", Employee.class)
+                     .setParameter("id", id)
+                     .getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+
     public List<Employee> findAll() {
         EntityManager em = JPAUtil.getEntityManager();
         try {
