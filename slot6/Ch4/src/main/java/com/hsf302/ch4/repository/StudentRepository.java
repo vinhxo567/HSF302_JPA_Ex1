@@ -11,6 +11,7 @@ import java.util.Optional;
 import com.hsf302.ch4.pojo.Gender;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.Modifying;
 
 public interface StudentRepository extends JpaRepository<Student, Long>,
                                            JpaSpecificationExecutor<Student> {
@@ -38,4 +39,8 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
             @Param("dCode") String deptCode,
             @Param("mGpa") double minGpa
     );                                                                      // TODO 13
+
+    @Modifying
+    @Query("UPDATE Student s SET s.active = false WHERE s.gpa < :minGpa")
+    int deactivateStudentsWithGpaLessThan(@Param("minGpa") double minGpa);  // TODO 14
 }

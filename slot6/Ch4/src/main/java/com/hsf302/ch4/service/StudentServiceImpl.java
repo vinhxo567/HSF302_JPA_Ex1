@@ -114,4 +114,10 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getStudentsByDeptAndMinGpaNamed(String deptCode, double minGpa) {
         return studentRepository.findByDeptAndMinGpa_Named(deptCode, minGpa);
     }
+
+    @Override
+    @Transactional
+    public int deactivateLowGpaStudents(double threshold) {
+        return studentRepository.deactivateStudentsWithGpaLessThan(threshold);
+    }
 }
