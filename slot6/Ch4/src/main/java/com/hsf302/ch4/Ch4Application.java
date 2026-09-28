@@ -1,4 +1,4 @@
-package com.hfs302.Ch4;
+package com.hsf302.ch4;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
