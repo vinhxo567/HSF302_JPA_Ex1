@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import java.util.List;
 import com.hsf302.ch4.pojo.Student;
+import com.hsf302.ch4.pojo.Gender;
+import java.time.LocalDate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -93,7 +95,12 @@ public class ExerciseRunner implements CommandLineRunner {
         printList("email domain 'gmail.com'", studentService.findByEmailDomain("gmail.com"));
         printList("email is null", studentService.findWithoutEmail());
     }
-    private void todo10() {}
+    private void todo10() {
+        title("TODO 10: Between / And / True / After");
+        printList("GPA [6.0 - 8.0]", studentService.getStudentsInGpaRange(6.0, 8.0));
+        printList("Active FEMALE students", studentService.getActiveStudentsByGender(Gender.FEMALE));
+        printList("Born after 2002-01-01", studentService.getStudentsBornAfter(LocalDate.of(2002, 1, 1)));
+    }
     private void todo11() {}
     private void todo12() {}
     private void todo13() {}

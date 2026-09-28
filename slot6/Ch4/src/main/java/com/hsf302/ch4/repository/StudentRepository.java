@@ -4,8 +4,11 @@ import com.hsf302.ch4.pojo.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import com.hsf302.ch4.pojo.Gender;
 
 public interface StudentRepository extends JpaRepository<Student, Long>,
                                            JpaSpecificationExecutor<Student> {
@@ -17,4 +20,8 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     List<Student> findByFullNameContainingIgnoreCase(String keyword);           // TODO 9
     List<Student> findByEmailEndingWith(String suffix);
     List<Student> findByEmailIsNull();
+
+    List<Student> findByGpaBetween(double min, double max);                 // TODO 10
+    List<Student> findByGenderAndActiveTrue(Gender gender);
+    List<Student> findByDobAfter(LocalDate date);
 }
