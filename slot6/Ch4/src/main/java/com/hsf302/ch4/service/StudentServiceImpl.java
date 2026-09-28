@@ -109,4 +109,9 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getStudentsByDeptAndMinGpa(String deptCode, double minGpa) {
         return studentRepository.findByDeptAndMinGpa_Positional(deptCode, minGpa);
     }
+
+    @Override
+    public List<Student> getStudentsByDeptAndMinGpaNamed(String deptCode, double minGpa) {
+        return studentRepository.findByDeptAndMinGpa_Named(deptCode, minGpa);
+    }
 }

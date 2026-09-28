@@ -111,7 +111,11 @@ public class ExerciseRunner implements CommandLineRunner {
         title("TODO 12: @Query (positional parameters ?1, ?2)");
         printList("SE students with GPA >= 7.0", studentService.getStudentsByDeptAndMinGpa("SE", 7.0));
     }
-    private void todo13() {}
+    private void todo13() {
+        title("TODO 13: @Query (named parameters @Param)");
+        printList("SE students with GPA >= 7.0 (Named)",
+                studentService.getStudentsByDeptAndMinGpaNamed("SE", 7.0));
+    }
     private void todo14() {}
     private void todo15() {}
     private void todo16() {}

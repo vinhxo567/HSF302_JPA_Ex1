@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import com.hsf302.ch4.pojo.Gender;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface StudentRepository extends JpaRepository<Student, Long>,
                                            JpaSpecificationExecutor<Student> {
@@ -31,4 +32,10 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
 
     @Query("SELECT s FROM Student s WHERE s.department.code = ?1 AND s.gpa >= ?2")
     List<Student> findByDeptAndMinGpa_Positional(String deptCode, double minGpa); // TODO 12
+
+    @Query("SELECT s FROM Student s WHERE s.department.code = :dCode AND s.gpa >= :mGpa")
+    List<Student> findByDeptAndMinGpa_Named(
+            @Param("dCode") String deptCode,
+            @Param("mGpa") double minGpa
+    );                                                                      // TODO 13
 }
