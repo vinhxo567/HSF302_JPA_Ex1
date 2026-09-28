@@ -104,4 +104,9 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getTop3Students() {
         return studentRepository.findTop3ByOrderByGpaDesc();
     }
+
+    @Override
+    public List<Student> getStudentsByDeptAndMinGpa(String deptCode, double minGpa) {
+        return studentRepository.findByDeptAndMinGpa_Positional(deptCode, minGpa);
+    }
 }

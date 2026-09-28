@@ -107,7 +107,10 @@ public class ExerciseRunner implements CommandLineRunner {
         printList("Top 3 students by GPA", studentService.getTop3Students());
         printList("Departments with NO students", departmentService.getEmptyDepartments());
     }
-    private void todo12() {}
+    private void todo12() {
+        title("TODO 12: @Query (positional parameters ?1, ?2)");
+        printList("SE students with GPA >= 7.0", studentService.getStudentsByDeptAndMinGpa("SE", 7.0));
+    }
     private void todo13() {}
     private void todo14() {}
     private void todo15() {}

@@ -28,4 +28,6 @@ public interface StudentService {
     
     List<Student> getStudentsByDepartment(String deptCode);                 // TODO 11a
     List<Student> getTop3Students();                                        // TODO 11b
+    
+    List<Student> getStudentsByDeptAndMinGpa(String deptCode, double minGpa);     // TODO 12
 }

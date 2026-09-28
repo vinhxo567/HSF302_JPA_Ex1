@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.hsf302.ch4.pojo.Gender;
+import org.springframework.data.jpa.repository.Query;
 
 public interface StudentRepository extends JpaRepository<Student, Long>,
                                            JpaSpecificationExecutor<Student> {
@@ -27,4 +28,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
 
     List<Student> findByDepartment_Code(String deptCode);                   // TODO 11
     List<Student> findTop3ByOrderByGpaDesc();                               // TODO 11
+
+    @Query("SELECT s FROM Student s WHERE s.department.code = ?1 AND s.gpa >= ?2")
+    List<Student> findByDeptAndMinGpa_Positional(String deptCode, double minGpa); // TODO 12
 }
