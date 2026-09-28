@@ -25,4 +25,7 @@ public interface StudentService {
     List<Student> getStudentsInGpaRange(double minGpa, double maxGpa);      // TODO 10a
     List<Student> getActiveStudentsByGender(Gender gender);                 // TODO 10b
     List<Student> getStudentsBornAfter(LocalDate date);                     // TODO 10c
+    
+    List<Student> getStudentsByDepartment(String deptCode);                 // TODO 11a
+    List<Student> getTop3Students();                                        // TODO 11b
 }

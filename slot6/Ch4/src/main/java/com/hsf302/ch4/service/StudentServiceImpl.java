@@ -94,4 +94,14 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getStudentsBornAfter(LocalDate date) {
         return studentRepository.findByDobAfter(date);
     }
+
+    @Override
+    public List<Student> getStudentsByDepartment(String deptCode) {
+        return studentRepository.findByDepartment_Code(deptCode);
+    }
+
+    @Override
+    public List<Student> getTop3Students() {
+        return studentRepository.findTop3ByOrderByGpaDesc();
+    }
 }

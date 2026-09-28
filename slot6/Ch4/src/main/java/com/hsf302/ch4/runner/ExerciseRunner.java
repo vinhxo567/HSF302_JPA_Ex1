@@ -101,7 +101,12 @@ public class ExerciseRunner implements CommandLineRunner {
         printList("Active FEMALE students", studentService.getActiveStudentsByGender(Gender.FEMALE));
         printList("Born after 2002-01-01", studentService.getStudentsBornAfter(LocalDate.of(2002, 1, 1)));
     }
-    private void todo11() {}
+    private void todo11() {
+        title("TODO 11: Nested / Top / IsEmpty");
+        printList("Students in 'AI' department", studentService.getStudentsByDepartment("AI"));
+        printList("Top 3 students by GPA", studentService.getTop3Students());
+        printList("Departments with NO students", departmentService.getEmptyDepartments());
+    }
     private void todo12() {}
     private void todo13() {}
     private void todo14() {}
