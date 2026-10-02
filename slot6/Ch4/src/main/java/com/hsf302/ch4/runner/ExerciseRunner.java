@@ -9,6 +9,7 @@ import com.hsf302.ch4.pojo.Student;
 import com.hsf302.ch4.pojo.Gender;
 import java.time.LocalDate;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import java.util.Collection;
 @Component
 @Order(2)
 @RequiredArgsConstructor
+@Profile("ex1")
 public class ExerciseRunner implements CommandLineRunner {
 
     // Runner CHỈ phụ thuộc vào Service (interface), KHÔNG inject Repository
