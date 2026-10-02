@@ -62,4 +62,9 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
 
     @Query("SELECT s FROM Student s WHERE s.department.code = :code AND s.active = true")
     org.springframework.data.domain.Page<Student> findActiveByDepartment(@Param("code") String code, org.springframework.data.domain.Pageable pageable); // TODO 19
+
+    // ===== Exercise 2 — Part C =====
+    List<Student> findByCourses_CodeOrderByFullNameAsc(String courseCode);                  // TODO 9
+    long countByCourses_Code(String courseCode);                                             // TODO 9, 20
+    List<Student> findByCourses_CodeAndActiveTrueOrderByFullNameAsc(String courseCode);      // TODO 9
 }
