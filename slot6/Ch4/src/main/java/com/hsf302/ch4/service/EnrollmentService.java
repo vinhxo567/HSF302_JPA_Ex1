@@ -24,4 +24,7 @@ public interface EnrollmentService {
     Student getStudentWithCourses(String studentCode);
     List<EnrollmentView> getEnrollmentsOfDepartment(String deptCode);
     Page<Student> findStudentsInCoursePage(String courseCode, int pageIndex, int size);
+
+    // ===== Bonus =====
+    List<Student> search(String courseCode, String semester, String deptCode, Double minGpa);
 }
