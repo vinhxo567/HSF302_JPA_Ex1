@@ -59,4 +59,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
            "WHERE s.active = true " +
            "ORDER BY s.fullName")
     List<com.hsf302.ch4.dto.StudentSummary> findActiveSummaries(); // TODO 18
+
+    @Query("SELECT s FROM Student s WHERE s.department.code = :code AND s.active = true")
+    org.springframework.data.domain.Page<Student> findActiveByDepartment(@Param("code") String code, org.springframework.data.domain.Pageable pageable); // TODO 19
 }
