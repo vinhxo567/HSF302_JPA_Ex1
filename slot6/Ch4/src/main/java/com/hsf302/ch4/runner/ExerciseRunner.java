@@ -121,7 +121,10 @@ public class ExerciseRunner implements CommandLineRunner {
         int updated = studentService.deactivateLowGpaStudents(5.0);
         System.out.println("Deactivated " + updated + " students with GPA < 5.0");
     }
-    private void todo15() {}
+    private void todo15() {
+        title("TODO 15: Subquery - GPA above average");
+        printList("GPA > AVG", studentService.findAboveAverageGpa());
+    }
     private void todo16() {}
     private void todo17() {}
     private void todo18() {}

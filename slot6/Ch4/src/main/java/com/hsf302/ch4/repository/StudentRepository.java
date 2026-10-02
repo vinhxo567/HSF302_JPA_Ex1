@@ -43,4 +43,6 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     @Modifying
     @Query("UPDATE Student s SET s.active = false WHERE s.gpa < :minGpa")
     int deactivateStudentsWithGpaLessThan(@Param("minGpa") double minGpa);  // TODO 14
+    @Query("SELECT s FROM Student s WHERE s.gpa > (SELECT AVG(s2.gpa) FROM Student s2) ORDER BY s.gpa DESC")
+    List<Student> findAboveAverageGpa();
 }

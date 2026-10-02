@@ -120,4 +120,9 @@ public class StudentServiceImpl implements StudentService {
     public int deactivateLowGpaStudents(double threshold) {
         return studentRepository.deactivateStudentsWithGpaLessThan(threshold);
     }
+
+    @Override
+    public List<Student> findAboveAverageGpa() {
+        return studentRepository.findAboveAverageGpa();
+    }
 }

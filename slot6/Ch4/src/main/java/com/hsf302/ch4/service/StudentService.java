@@ -34,4 +34,5 @@ public interface StudentService {
     List<Student> getStudentsByDeptAndMinGpaNamed(String deptCode, double minGpa);  // TODO 13
     
     int deactivateLowGpaStudents(double threshold);                                 // TODO 14
+    List<Student> findAboveAverageGpa();                                            // TODO 15
 }
