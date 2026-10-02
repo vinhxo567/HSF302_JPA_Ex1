@@ -191,7 +191,27 @@ public class Exercise2Runner implements CommandLineRunner {
         printList("Courses of IA003", enrollmentService.getCoursesOfStudent("IA003"));
         System.out.println("Students of MKT101: " + enrollmentService.countStudentsInCourse("MKT101"));
     }
-    private void todo21() {}
+    private void todo21() {
+        title("TODO 21: unenroll with business rules");
+
+        // (a) OK: SE001 đang enrolled HSF302 -> unenroll thành công
+        attempt("unenroll SE001 from HSF302",
+                () -> enrollmentService.unenroll("SE001", "HSF302"));
+
+        // (b) FAIL: SE001 không enrolled AIL303
+        attempt("unenroll SE001 from AIL303 (not enrolled)",
+                () -> enrollmentService.unenroll("SE001", "AIL303"));
+
+        // (c) FAIL: student không tồn tại
+        attempt("unenroll XX999 from PRJ301 (student not found)",
+                () -> enrollmentService.unenroll("XX999", "PRJ301"));
+
+        // Kiểm tra lại: SE001 còn mấy khóa sau khi bỏ HSF302
+        printList("Courses of SE001 after unenroll",
+                enrollmentService.getCoursesOfStudent("SE001"));
+        System.out.println("Students of HSF302 now: "
+                + enrollmentService.countStudentsInCourse("HSF302"));
+    }
     private void todo22() {}
     private void todo23() {}
     private void todo24() {}

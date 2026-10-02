@@ -30,4 +30,5 @@ public interface EnrollmentService {
 
     // ===== Part E =====
     void enroll(String studentCode, String courseCode);
+    void unenroll(String studentCode, String courseCode);  // TODO 21
 }
