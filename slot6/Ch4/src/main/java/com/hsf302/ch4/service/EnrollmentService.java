@@ -27,4 +27,7 @@ public interface EnrollmentService {
 
     // ===== Bonus =====
     List<Student> search(String courseCode, String semester, String deptCode, Double minGpa);
+
+    // ===== Part E =====
+    void enroll(String studentCode, String courseCode);
 }
