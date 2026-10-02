@@ -41,4 +41,19 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentRepository.findByCodeWithStudents(code)
                 .orElseThrow(() -> new IllegalArgumentException("Department not found: " + code));
     }
+
+    @Override
+    public List<com.hsf302.ch4.dto.DepartmentStudentCount> countStudentsByDepartment() {
+        return departmentRepository.countStudentsByDepartment();
+    }
+
+    @Override
+    public List<com.hsf302.ch4.dto.DepartmentStudentDTO> countStudentsByDepartmentDTO() {
+        return departmentRepository.countStudentsByDepartmentDTO();
+    }
+
+    @Override
+    public List<com.hsf302.ch4.dto.DepartmentStudentCount> countStudentsByDepartmentNative() {
+        return departmentRepository.countStudentsByDepartmentNative();
+    }
 }

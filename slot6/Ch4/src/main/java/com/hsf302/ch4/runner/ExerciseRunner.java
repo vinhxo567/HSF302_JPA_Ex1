@@ -144,7 +144,26 @@ public class ExerciseRunner implements CommandLineRunner {
         title("TODO 17: Native query - TOP N");
         printList("Top 2 GPA of SE", studentService.findTopNInDepartment("SE", 2));
     }
-    private void todo18() {}
+    private void todo18() {
+        title("TODO 18: Interface Projection / DTO / Native SQL");
+        System.out.println("1. Interface Projection:");
+        departmentService.countStudentsByDepartment().forEach(d -> 
+            System.out.println("   " + d.getDepartmentName() + " - " + d.getStudentCount()));
+
+        System.out.println("2. DTO Constructor Expression:");
+        departmentService.countStudentsByDepartmentDTO().forEach(d -> 
+            System.out.println("   " + d.getDepartmentName() + " - " + d.getStudentCount()));
+
+        System.out.println("3. Native SQL:");
+        departmentService.countStudentsByDepartmentNative().forEach(d -> 
+            System.out.println("   " + d.getDepartmentName() + " - " + d.getStudentCount()));
+            
+        System.out.println("\n--- Student Summary (Original TODO 18) ---");
+        List<com.hsf302.ch4.dto.StudentSummary> list = studentService.getActiveSummaries();
+        list.forEach(p -> System.out.printf("   %s | %-15s | %.1f | %s%n",
+                p.getStudentCode(), p.getFullName(), p.getGpa(), p.getDepartmentName()));
+        System.out.println("   -> " + list.size() + " record(s)");
+    }
     private void todo19() {}
     private void todo20() {}
     private void todo21() {}

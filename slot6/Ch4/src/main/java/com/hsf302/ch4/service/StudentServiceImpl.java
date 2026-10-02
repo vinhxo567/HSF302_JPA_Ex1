@@ -133,4 +133,9 @@ public class StudentServiceImpl implements StudentService {
         }
         return studentRepository.findTopNByDepartmentNative(deptCode, n);
     }
+
+    @Override
+    public List<com.hsf302.ch4.dto.StudentSummary> getActiveSummaries() {
+        return studentRepository.findActiveSummaries();
+    }
 }

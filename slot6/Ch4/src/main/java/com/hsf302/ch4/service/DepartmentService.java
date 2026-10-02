@@ -10,4 +10,8 @@ public interface DepartmentService {
     
     java.util.Optional<Department> findByCode(String code);   // TODO 16a
     Department getWithStudents(String code);                  // TODO 16b
+
+    List<com.hsf302.ch4.dto.DepartmentStudentCount> countStudentsByDepartment();
+    List<com.hsf302.ch4.dto.DepartmentStudentDTO> countStudentsByDepartmentDTO();
+    List<com.hsf302.ch4.dto.DepartmentStudentCount> countStudentsByDepartmentNative();
 }

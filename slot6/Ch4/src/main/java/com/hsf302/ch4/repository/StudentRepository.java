@@ -52,4 +52,11 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
                    "ORDER BY s.gpa DESC",
            nativeQuery = true)
     List<Student> findTopNByDepartmentNative(@Param("code") String code, @Param("n") int n); // TODO 17
+
+    @Query("SELECT s.studentCode AS studentCode, s.fullName AS fullName, " +
+           "       s.gpa AS gpa, d.name AS departmentName " +
+           "FROM Student s JOIN s.department d " +
+           "WHERE s.active = true " +
+           "ORDER BY s.fullName")
+    List<com.hsf302.ch4.dto.StudentSummary> findActiveSummaries(); // TODO 18
 }
