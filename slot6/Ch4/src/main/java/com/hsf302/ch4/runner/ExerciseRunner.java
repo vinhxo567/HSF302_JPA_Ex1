@@ -5,6 +5,7 @@ import com.hsf302.ch4.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import java.util.List;
+import com.hsf302.ch4.pojo.Department;
 import com.hsf302.ch4.pojo.Student;
 import com.hsf302.ch4.pojo.Gender;
 import java.time.LocalDate;
