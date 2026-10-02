@@ -1,17 +1,19 @@
 package com.hsf302.ch4.repository;
 
+import com.hsf302.ch4.dto.EnrollmentView;
+import com.hsf302.ch4.pojo.Gender;
 import com.hsf302.ch4.pojo.Student;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
-import com.hsf302.ch4.pojo.Gender;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.jpa.repository.Modifying;
 
 public interface StudentRepository extends JpaRepository<Student, Long>,
                                            JpaSpecificationExecutor<Student> {
@@ -61,5 +63,42 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     List<com.hsf302.ch4.dto.StudentSummary> findActiveSummaries(); // TODO 18
 
     @Query("SELECT s FROM Student s WHERE s.department.code = :code AND s.active = true")
-    org.springframework.data.domain.Page<Student> findActiveByDepartment(@Param("code") String code, org.springframework.data.domain.Pageable pageable); // TODO 19
+    Page<Student> findActiveByDepartment(@Param("code") String code, Pageable pageable); // TODO 19
+
+    // ===== Exercise 2 — Part C =====
+    List<Student> findByCourses_CodeOrderByFullNameAsc(String courseCode);                  // TODO 9
+    long countByCourses_Code(String courseCode);                                             // TODO 9, 20
+    List<Student> findByCourses_CodeAndActiveTrueOrderByFullNameAsc(String courseCode);      // TODO 9
+    List<Student> findByCoursesIsEmptyOrderByFullNameAsc();                                  // TODO 11, 24
+    boolean existsByStudentCodeAndCourses_Code(String studentCode, String courseCode);       // TODO 11
+
+    // ===== Exercise 2 — Part D =====
+    @Query("SELECT s FROM Student s JOIN s.courses c " +
+           "WHERE c.code = :code AND s.gpa >= :minGpa ORDER BY s.gpa DESC")
+    List<Student> findGoodStudentsInCourse(@Param("code") String courseCode,
+                                           @Param("minGpa") double minGpa);                  // TODO 12
+
+    @Query("SELECT new com.hsf302.ch4.dto.StudentCreditDTO(s.studentCode, s.fullName, COUNT(c), SUM(c.credits)) " +
+           "FROM Student s JOIN s.courses c " +
+           "GROUP BY s.studentCode, s.fullName " +
+           "HAVING SUM(c.credits) >= :minCredits " +
+           "ORDER BY SUM(c.credits) DESC, s.fullName")
+    List<com.hsf302.ch4.dto.StudentCreditDTO> getCreditSummary(@Param("minCredits") long minCredits);          // TODO 14
+
+    @Query("SELECT s FROM Student s WHERE SIZE(s.courses) > :n ORDER BY s.fullName")
+    List<Student> findStudentsWithMoreThanNCourses(@Param("n") int n);                      // TODO 15
+
+    @Query("SELECT s FROM Student s LEFT JOIN FETCH s.courses WHERE s.studentCode = :code")
+    Optional<Student> findByStudentCodeWithCourses(@Param("code") String studentCode);      // TODO 16
+
+    @Query("SELECT s.studentCode AS studentCode, s.fullName AS fullName, " +
+           "       c.code AS courseCode, c.name AS courseName, c.credits AS credits " +
+           "FROM Student s JOIN s.department d JOIN s.courses c " +
+           "WHERE d.code = :deptCode " +
+           "ORDER BY s.studentCode, c.code")
+    List<EnrollmentView> findEnrollmentsOfDepartment(@Param("deptCode") String deptCode);   // TODO 18
+
+    @Query(value = "SELECT s FROM Student s JOIN s.courses c WHERE c.code = :code",
+           countQuery = "SELECT COUNT(s) FROM Student s JOIN s.courses c WHERE c.code = :code")
+    Page<Student> findPageByCourseCode(@Param("code") String courseCode, Pageable pageable); // TODO 19
 }
