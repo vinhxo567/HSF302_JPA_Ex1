@@ -3,6 +3,8 @@ package com.hsf302.ch4.repository;
 import com.hsf302.ch4.dto.EnrollmentView;
 import com.hsf302.ch4.pojo.Gender;
 import com.hsf302.ch4.pojo.Student;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -61,7 +63,7 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     List<com.hsf302.ch4.dto.StudentSummary> findActiveSummaries(); // TODO 18
 
     @Query("SELECT s FROM Student s WHERE s.department.code = :code AND s.active = true")
-    org.springframework.data.domain.Page<Student> findActiveByDepartment(@Param("code") String code, org.springframework.data.domain.Pageable pageable); // TODO 19
+    Page<Student> findActiveByDepartment(@Param("code") String code, Pageable pageable); // TODO 19
 
     // ===== Exercise 2 — Part C =====
     List<Student> findByCourses_CodeOrderByFullNameAsc(String courseCode);                  // TODO 9
@@ -95,4 +97,8 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
            "WHERE d.code = :deptCode " +
            "ORDER BY s.studentCode, c.code")
     List<EnrollmentView> findEnrollmentsOfDepartment(@Param("deptCode") String deptCode);   // TODO 18
+
+    @Query(value = "SELECT s FROM Student s JOIN s.courses c WHERE c.code = :code",
+           countQuery = "SELECT COUNT(s) FROM Student s JOIN s.courses c WHERE c.code = :code")
+    Page<Student> findPageByCourseCode(@Param("code") String courseCode, Pageable pageable); // TODO 19
 }
