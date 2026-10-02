@@ -7,4 +7,7 @@ public interface DepartmentService {
     long count();                                   // TODO 6
     boolean existsById(Long id);                    // TODO 6
     List<Department> getEmptyDepartments();         // TODO 11c
+    
+    java.util.Optional<Department> findByCode(String code);   // TODO 16a
+    Department getWithStudents(String code);                  // TODO 16b
 }
