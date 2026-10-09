@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>500 Lỗi máy chủ</title>
+</head>
+<body>
+<section>
+    <div class="text-center p-5">
+        <h1 class="display-1 text-danger">500</h1>
+        <h2>Đã có lỗi xảy ra</h2>
+        <p class="lead mt-3">Xin lỗi, máy chủ đang gặp sự cố. Vui lòng thử lại sau.</p>
+        <a th:href="@{/students}" class="btn btn-primary mt-4"><i class="bi bi-house"></i> Về trang chủ</a>
+    </div>
+</section>
+</body>
+</html>
