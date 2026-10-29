@@ -23,14 +23,12 @@ public class DrinkOrderApp extends Application {
 
     // Bảng giá — LinkedHashMap giữ đúng thứ tự khi đổ vào ComboBox
     private static final Map<String, Integer> MENU = new LinkedHashMap<>();
-
     static {
         MENU.put("Cà phê sữa", 25_000);
         MENU.put("Trà sữa", 30_000);
         MENU.put("Nước cam", 28_000);
         MENU.put("Sinh tố bơ", 35_000);
     }
-
     private static final int TOPPING_PRICE = 5_000;
 
     // TODO 1: Khai báo control là field
@@ -70,6 +68,7 @@ public class DrinkOrderApp extends Application {
         taLog.setPrefRowCount(8);
         taLog.setTooltip(new Tooltip("Double-click để xóa nhật ký"));
         btnCalc.setDefaultButton(true);     // Enter = bấm "Tính tiền"
+
         // TODO 3: Xếp layout (B2 sẽ học kỹ hơn)
         GridPane form = new GridPane();
         form.setHgap(10);
@@ -100,9 +99,38 @@ public class DrinkOrderApp extends Application {
     private void registerEvents() {
         // TODO 4: Cách 1 — method reference (gọn khi logic dài, tách ra method riêng)
         btnCalc.setOnAction(this::handleCalc);
+
+        // TODO 5: Cách 2 — lambda (phổ biến nhất)
+        btnClear.setOnAction(e -> {
+            reset();
+            log("Bấm Làm lại");
+        });
     }
 
     // Khai báo tạm để không bị báo lỗi đỏ this::handleCalc (logic chi tiết sẽ viết ở TODO 11)
     private void handleCalc(ActionEvent e) {
+    }
+
+    // TODO 12: Đưa form về trạng thái ban đầu
+    private void reset() {
+        tfName.clear();
+        cbDrink.setValue(null);
+        tgSize.selectToggle(rbM);
+        chkPearl.setSelected(false);
+        chkJelly.setSelected(false);
+        chkLessSugar.setSelected(false);
+        tfQty.setText("1");
+        lblResult.setStyle("");
+        lblResult.setText("Chưa có đơn hàng");
+        tfName.requestFocus();
+    }
+
+    private void log(String msg) {
+        taLog.appendText("[%s] %s%n".formatted(
+                LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")), msg));
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
