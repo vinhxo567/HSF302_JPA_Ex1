@@ -146,6 +146,13 @@ public class DrinkOrderApp extends Application {
         tfQty.textProperty().addListener((obs, oldV, newV) -> {
             if (!newV.matches("\\d{0,2}")) tfQty.setText(oldV);   // chỉ cho gõ tối đa 2 chữ số
         });
+
+        // TODO 10: MouseEvent
+        btnCalc.setOnMouseEntered(e -> btnCalc.setStyle("-fx-background-color: #1a73e8; -fx-text-fill: white;"));
+        btnCalc.setOnMouseExited(e -> btnCalc.setStyle(""));
+        taLog.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) taLog.clear();
+        });
     }
 
     // Khai báo tạm để không bị báo lỗi đỏ this::handleCalc (logic chi tiết sẽ viết ở TODO 11)
