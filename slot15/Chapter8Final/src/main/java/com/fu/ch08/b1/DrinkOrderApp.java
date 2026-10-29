@@ -105,6 +105,20 @@ public class DrinkOrderApp extends Application {
             reset();
             log("Bấm Làm lại");
         });
+
+        // TODO 6: Cách 3 — anonymous class (viết "dài" để hiểu bản chất: EventHandler là interface 1 method handle)
+        cbDrink.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String d = cbDrink.getValue();
+                if (d != null) {            // reset() gọi setValue(null) cũng kích hoạt onAction → phải kiểm tra null
+                    log("Chọn đồ uống: %s (%,d đ)".formatted(d, MENU.get(d)));
+                }
+            }
+        });
+
+        // TextField: nhấn Enter → ActionEvent. Vì tfName có onAction nên Enter KHÔNG kích hoạt defaultButton
+        tfName.setOnAction(e -> cbDrink.requestFocus());
     }
 
     // Khai báo tạm để không bị báo lỗi đỏ this::handleCalc (logic chi tiết sẽ viết ở TODO 11)
