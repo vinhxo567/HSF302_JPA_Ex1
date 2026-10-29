@@ -23,12 +23,14 @@ public class DrinkOrderApp extends Application {
 
     // Bảng giá — LinkedHashMap giữ đúng thứ tự khi đổ vào ComboBox
     private static final Map<String, Integer> MENU = new LinkedHashMap<>();
+
     static {
         MENU.put("Cà phê sữa", 25_000);
         MENU.put("Trà sữa", 30_000);
         MENU.put("Nước cam", 28_000);
         MENU.put("Sinh tố bơ", 35_000);
     }
+
     private static final int TOPPING_PRICE = 5_000;
 
     // TODO 1: Khai báo control là field
@@ -86,3 +88,21 @@ public class DrinkOrderApp extends Application {
 
         VBox root = new VBox(12, title, form, buttons, lblResult, new Label("Nhật ký sự kiện:"), taLog);
         root.setPadding(new Insets(16));
+        registerEvents();
+
+        Scene scene = new Scene(root, 540, 580);
+        stage.setScene(scene);
+        stage.setTitle("B1 - Controls & Sự kiện");
+        stage.show();
+        tfName.requestFocus();
+    }
+
+    private void registerEvents() {
+        // TODO 4: Cách 1 — method reference (gọn khi logic dài, tách ra method riêng)
+        btnCalc.setOnAction(this::handleCalc);
+    }
+
+    // Khai báo tạm để không bị báo lỗi đỏ this::handleCalc (logic chi tiết sẽ viết ở TODO 11)
+    private void handleCalc(ActionEvent e) {
+    }
+}
