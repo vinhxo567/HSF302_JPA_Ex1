@@ -210,8 +210,5 @@ public class DrinkOrderApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }git add .
-    git commit -m "feat(b1): Xu ly validate, tinh tien va hien thi ket qua trong handleCalc" -m "TODO 11"
-    git push origin master
-
+    }
 }
