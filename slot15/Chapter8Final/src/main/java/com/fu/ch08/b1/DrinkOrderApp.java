@@ -119,6 +119,15 @@ public class DrinkOrderApp extends Application {
 
         // TextField: nhấn Enter → ActionEvent. Vì tfName có onAction nên Enter KHÔNG kích hoạt defaultButton
         tfName.setOnAction(e -> cbDrink.requestFocus());
+
+        // TODO 7: Một handler dùng chung cho nhiều CheckBox — phân biệt bằng getSource()
+        EventHandler<ActionEvent> onCheck = e -> {
+            CheckBox src = (CheckBox) e.getSource();
+            log("%s: %s".formatted(src.getText(), src.isSelected() ? "chọn" : "bỏ chọn"));
+        };
+        chkPearl.setOnAction(onCheck);
+        chkJelly.setOnAction(onCheck);
+        chkLessSugar.setOnAction(onCheck);
     }
 
     // Khai báo tạm để không bị báo lỗi đỏ this::handleCalc (logic chi tiết sẽ viết ở TODO 11)
